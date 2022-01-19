@@ -1,5 +1,7 @@
 # About
 
+[![GitHub license](https://img.shields.io/github/license/czernika/brocket)](https://github.com/czernika/brocket/blob/master/LICENSE) [![GitHub release](https://img.shields.io/github/v/release/czernika/brocket)](https://gitHub.com/czernika/brocket/releases/) ![Last commit](https://img.shields.io/github/last-commit/czernika/brocket)
+
 Developer-friendly framework heavily inspired by [Laravel Framework](https://laravel.com/) and based on [Timber](https://timber.github.io/docs/guides/wp-integration/) and [Wpemerge](https://wpemerge.com/) solutions for WordPress themes development with [Bedrock](https://roots.io/bedrock/) folder structure
 
 ## Why to Use It
