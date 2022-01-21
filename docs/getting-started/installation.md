@@ -31,3 +31,21 @@ wp qm enable
 ```
 
 Login into admin-panel under `wp/wp-login.php` and that's it. Happy coding!
+
+## Run with Docker
+
+Brocket comes with `docker-compose.yml` file - you need Docker installed on your machine. After brocket has been installed run
+
+```sh
+docker-compose up -d --build
+```
+
+After that you need to change permissions for `web/app/uploads` folder
+
+```sh
+docker exec -it brocket-php bash
+
+chown -R www-data:www-data /var/www/html/web/app/uploads
+
+chmod -R 755 /var/www/html/web/app/uploads
+```
