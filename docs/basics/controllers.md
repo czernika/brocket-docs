@@ -2,7 +2,7 @@
 
 See [WPEmerge controllers documentation](https://docs.wpemerge.com/#/framework/routing/controllers)
 
-# Create Controller
+## Create Controller
 
 To create controller class run in your terminal
 
@@ -13,6 +13,12 @@ php brocooly new:controller ControllerName
 This will create `ControllerName.php` file within `Theme/Http/Controllers` directory
 
 You may pass two options - `-c` (this will create `__construct()` method within controller) and `-r` ("resource" controller - creates two additional methods to handle singular and archive pages for post type)
+
+## Middleware
+
+To register controller which supports middleware you may pass `-m` flag which will register controller class with required options (like Interface and Trait) and default construct method with `$this->middleware( 'mymiddleware' )` content.
+
+!> If you pass both `-mc` flags created construct method will be empty
 
 ## Dependency Injection
 
