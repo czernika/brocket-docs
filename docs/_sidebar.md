@@ -12,3 +12,4 @@
     * [Query](basics/query.md)
     * [Providers](basics/providers.md)
     * [Customizer](basics/customizer.md)
+    * [Helpers](basics/helpers.md)
