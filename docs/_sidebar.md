@@ -10,3 +10,5 @@
     * [Controllers](basics/controllers.md)
     * [Models](basics/models.md)
     * [Query](basics/query.md)
+    * [Providers](basics/providers.md)
+    * [Customizer](basics/customizer.md)

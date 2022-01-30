@@ -106,6 +106,30 @@ To register custom post types and taxonomies you should pass class name into `co
 
 !> Dont' forget flush permalinks immediately after - go to your Settings - Permalinks and hit Save changes button or type `wp rewrite flush` command
 
+## Relations
+
+You may specify relations for your models. Currently there is only one but it is kinda basic relation - post type belongs to specific taxonomy
+
+Example below will show you relation between `Book` post type and `Genre` taxonomy
+
+```php
+class Book extends PostType
+{
+    public function genres()
+    {
+        return $this->belongsToTaxonomy( Genre::TAXONOMY );
+    }
+}
+```
+
+Within your twig templates you may access terms simply as
+
+```twig
+{{ book.genres }}
+```
+
+This will return an array of genre terms for specific book.
+
 ## Metaboxes
 
 To add metaboxes to custom post types and taxonomies (and not only - you may metaboxes for posts the same way) you need to use `HasPostMetaboxes` or `HasTermMetaboxes` traits within respective models.
