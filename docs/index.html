@@ -20,14 +20,41 @@
       search: {
         maxAge: 86400000, // Expiration time, the default one day
         paths: 'auto',
-        placeholder: 'Type to search',
-        noData: 'No Results!',
+        placeholder: {
+          '/ru/': 'Поиск',
+          '/': 'Type to search'
+        },
+        noData: {
+          '/ru/': 'Результатов нет!',
+          '/': 'No results!'
+        },
         depth: 6,
-        hideOtherSidebarContent: false, // whether or not to hide other sidebar content
+        hideOtherSidebarContent: false,
       },
       loadSidebar: true,
       loadNavbar: true,
       routerMode: 'hash',
+      subMaxLevel: 2,
+      auto2top: true,
+      logo: '_media/logo-64.svg',
+      nameLink: {
+        '/ru/': '#/ru/',
+        '/': '#/',
+      },
+      copyCode: {
+        buttonText: {
+          '/ru/'   : 'Скопировать в буфер обмена',
+          '/'      : 'Copy to clipboard'
+        },
+        errorText: {
+          '/ru/'   : 'Ошибка',
+          '/'      : 'Error'
+        },
+        successText: {
+          '/ru/'   : 'Скопировано',
+          '/'      : 'Copied'
+        },
+      },
     }
   </script>
   <!-- Docsify v4 -->
