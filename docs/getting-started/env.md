@@ -4,7 +4,7 @@ Environment defines sites setting depends on development stage. If you're on a l
 
 ## Configuration files :id=config
 
-File `config/application.php` is responsible for site configuration/ It is contains list of WordPress definitions and major settings which usually listed within `wp-config.php`. All defined here will be available globally across any environment type unless being redefined within appropriate config environment file
+File `config/application.php` is responsible for site configuration. It is contains list of WordPress definitions and major settings which usually listed within `wp-config.php`. All defined here will be available globally across any environment type unless being redefined within appropriate config environment file
 
 All environment configs lies within `config/environments` folder. Here you may specify any config settings within file which name is same as environment type. This means if your current environment is `development` than `development.php` the file and so on
 
