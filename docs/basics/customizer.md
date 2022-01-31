@@ -1,8 +1,8 @@
-# Customizer (Theme mods)
+# Customizer (Theme mods) :id=customizer
 
 WordPress [customizer](https://codex.wordpress.org/Theme_Customization_API) allows you to create theme options which may be visually edited. As it is quite job to do Brocket uses the power of [Kirki Framework](https://kirki.org) under the hood. 
 
-## Sections
+## Sections :id=sections
 
 The base of customizer is its options but without section none will be created. So first things first - let's create custom theme section
 
@@ -36,7 +36,7 @@ new \Kirki\Field\Text(
 
 > Note that with use of `Mod` facade you're may skip `section` argument, while within Kirki fields it is required
 
-## Panels
+## Panels :id=panels
 
 Panels basically same thing as section but it has no options and it is a wrapper for a group of sections
 

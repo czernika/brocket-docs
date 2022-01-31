@@ -3,6 +3,7 @@
 * Начало работы
     * [Минимальные требования](ru/getting-started/requirements.md)
     * [Установка](ru/getting-started/installation.md)
+    * [Окружение](ru/getting-started/env.md)
 
 * Основы
     * [Маршрутизация](ru/basics/routing.md)

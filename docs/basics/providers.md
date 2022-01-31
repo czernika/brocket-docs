@@ -1,8 +1,8 @@
-# Providers
+# Providers :id=providers
 
 See [WPEmerge providers documentation](https://docs.wpemerge.com/#/framework/tools/service-providers)
 
-## Create Provider
+## Create Provider :id=create
 
 To create service provider class run in your terminal
 

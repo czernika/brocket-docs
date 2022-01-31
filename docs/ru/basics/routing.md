@@ -1,24 +1,31 @@
-# Routing
+# Маршрутизация :id=routing
 
-See [WPEmerge routing documentation](https://docs.wpemerge.com/#/framework/routing/request-lifecycle)
+## Основы маршрутизации с WPEmerge :id=basics
 
-Brocket uses WPEMerge routing as a core but with some minor changes
+Чтобы узнать больше о маршрутизации, прочтите [документацию WPEmerge о маршрутах](https://docs.wpemerge.com/#/framework/routing/request-lifecycle)
 
-First of all you may use `Route` facade instead of `Brocooly::route()` method but it is all up to you
+## Условные теги :id=conditional
+
+Brocket использует маршрутизацию WPEMerge в основе, но с двумя дополнениями
+
+Во-первых, Вы можете использовать фасад `Brocooly\Support\Facades\Route` вместо метода `Brocooly::route()`
 
 ```php
 use Brocooly\Support\Facades\Route;
 
-Route::get()->where( 'is_front_page' )->handle( /* callback */ );
+Route::get()->where( 'is_front_page' )->handle( /* коллбэк-функция */ );
+
+// то же самое, что и
+Brocooly::route()->get()->where( 'is_front_page' )->handle( /* коллбэк-функция */ );
 ```
 
-Second one - see in this example `is_front_page` condition? Brocket has its own conditional methods based on this
+Второе - обратили ли Вы внимание на условие `is_front_page` в примере? Это так называемый условный тег WordPress, который объявляет, что текущая страница является главной. Brocket использует эти условия, чтобы упростить `get`-маршрутизацию - Вы можете писать имя метода как условие.
 
 ```php
-Route::is_front_page()->handle( /* callback */ );
+Route::is_front_page()->handle( /* коллбэк-функция */ );
 ```
 
-As you can see WordPress conditional tag now used as a facade method. But not every conditional has its own method - list of allowed types is listed bellow
+Но не все условные теги могут использоваться, как имя метода (некоторые из них требуют указание параметров, некоторые попросту бесполезны с точки зрения маршрутизации) - так что список разрешенных тегов со ссылкой размещен ниже
 
 - [is_404()](https://developer.wordpress.org/reference/functions/is_404/)
 - [is_archive()](https://developer.wordpress.org/reference/functions/is_archive/)

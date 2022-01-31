@@ -3,6 +3,7 @@
 * Getting Started
     * [Requirements](getting-started/requirements.md)
     * [Installation](getting-started/installation.md)
+    * [Environment](getting-started/env.md)
 
 * The Basics
     * [Routing](basics/routing.md)

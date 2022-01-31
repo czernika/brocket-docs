@@ -1,6 +1,10 @@
-# Routing
+# Routing :id=routing
 
-See [WPEmerge routing documentation](https://docs.wpemerge.com/#/framework/routing/request-lifecycle)
+## WPEmerge Basics :id=basics
+
+See [WPEmerge routing documentation](https://docs.wpemerge.com/#/framework/routing/request-lifecycle) to know more about routing
+
+## Conditional Routing :id=conditional
 
 Brocket uses WPEMerge routing as a core but with some minor changes
 
@@ -10,6 +14,9 @@ First of all you may use `Route` facade instead of `Brocooly::route()` method bu
 use Brocooly\Support\Facades\Route;
 
 Route::get()->where( 'is_front_page' )->handle( /* callback */ );
+
+// same as
+Brocooly::route()->get()->where( 'is_front_page' )->handle( /* callback */ );
 ```
 
 Second one - see in this example `is_front_page` condition? Brocket has its own conditional methods based on this
@@ -18,7 +25,7 @@ Second one - see in this example `is_front_page` condition? Brocket has its own 
 Route::is_front_page()->handle( /* callback */ );
 ```
 
-As you can see WordPress conditional tag now used as a facade method. But not every conditional has its own method - list of allowed types is listed bellow
+As you can see WordPress conditional tag now used as a facade method. But not every conditional has its own method - some of them has params, some are simply useless for routing. Full list of allowed types is listed bellow
 
 - [is_404()](https://developer.wordpress.org/reference/functions/is_404/)
 - [is_archive()](https://developer.wordpress.org/reference/functions/is_archive/)

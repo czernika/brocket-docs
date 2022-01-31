@@ -1,8 +1,8 @@
-# Models
+# Models :id=models
 
 Brocket Model is a realization of Timber's `Post` and `Term` classes. Basically WordPress has few basic models, two of them are post type and taxonomy. These conventions are serves as core concept for models under hood of Brocket
 
-## Post Types
+## Post Types :id=post-types
 
 To register custom post type (or create custom post type model speaking in Brocket-way) run the following command
 
@@ -66,7 +66,7 @@ class CustomPostType extends PostType
 }
 ```
 
-## Taxonomy
+## Taxonomies :id=taxonomies
 
 Basically same concept is correct for custom taxonomies with a few differences
 
@@ -100,13 +100,13 @@ class CustomTaxonomy extends Taxonomy
 
 Taxonomy is not same as PostType and registered via [register_extended_taxonomy()](https://github.com/johnbillion/extended-cpts/wiki/Registering-taxonomies) function.
 
-## Registration
+## Registration :id=registration
 
 To register custom post types and taxonomies you should pass class name into `config/models.php` file within `post_types` and `taxonomies` keys respectively
 
 !> Dont' forget flush permalinks immediately after - go to your Settings - Permalinks and hit Save changes button or type `wp rewrite flush` command
 
-## Relations
+## Relations :id=relations
 
 You may specify relations for your models. Currently there is only one but it is kinda basic relation - post type belongs to specific taxonomy
 
@@ -130,7 +130,7 @@ Within your twig templates you may access terms simply as
 
 This will return an array of genre terms for specific book.
 
-## Metaboxes
+## Metaboxes :id=metaboxes
 
 To add metaboxes to custom post types and taxonomies (and not only - you may metaboxes for posts the same way) you need to use `HasPostMetaboxes` or `HasTermMetaboxes` traits within respective models.
 
@@ -140,15 +140,15 @@ This wil provide some methods for you but you have to create one at least called
 
 > You may pass `-m` flag when creating your model to have quick access to its methods
 
-### setContainer( string $id, string $title )
+### setContainer( string $id, string $title ) :id=set-container
 
 This method helps you to quickly register container without defining where clause and will return `Carbon_Fields\Container` object - so you may continue to use Carbon Fields conditions and methods further. Just pass an unique container id and title (for end users) and start adding metaboxes to it
 
-### setContainerWithFields( string $id, string $title, array $fields )
+### setContainerWithFields( string $id, string $title, array $fields ) :id=set-container-with-fields
 
 Same as above but with a third argument - an array of metaboxes
 
-### Meta Facade
+### Meta Facade :id=facade
 
 To help you register metaboxes quicker Brocket provides `Brocooly\Support\Facades\Meta` Facade which has almost every `Carbon_Fields\Field` [types](https://docs.carbonfields.net/quickstart.html) (except for sidebar)
 
@@ -160,10 +160,10 @@ Field::make( 'text', 'crb_text', 'Text Field' );
 Meta::text( 'crb_text', 'Text Field' );
 ```
 
-## User
+## User :id=user
 
 **In development**
 
-## Comment
+## Comment :id=comment
 
 **In development**

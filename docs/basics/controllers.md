@@ -1,8 +1,8 @@
-# Controllers
+# Controllers :id=controllers
 
 See [WPEmerge controllers documentation](https://docs.wpemerge.com/#/framework/routing/controllers)
 
-## Create Controller
+## Create Controller :id=create
 
 To create controller class run in your terminal
 
@@ -14,13 +14,13 @@ This will create `ControllerName.php` file within `Theme/Http/Controllers` direc
 
 You may pass two options - `-c` (this will create `__construct()` method within controller) and `-r` ("resource" controller - creates two additional methods to handle singular and archive pages for post type)
 
-## Middleware
+## Middleware :id=middleware
 
 To register controller which supports middleware you may pass `-m` flag which will register controller class with required options (like Interface and Trait) and default construct method with `$this->middleware( 'mymiddleware' )` content.
 
 !> If you pass both `-mc` flags created construct method will be empty
 
-## Dependency Injection
+## Dependency Injection :id=dependency-injection
 
 Under the hood Service Providers uses [Pimple Container](https://github.com/silexphp/Pimple). So within this objects any rule may be provided. But it's not quite powerful as [PHP DI](https://php-di.org/) therefore no autowire and wildcards. Also Brocket has no goal to override WPEmerge Controllers or Container (well maybe one day but not for now). So how do you handle DI within your controller
 

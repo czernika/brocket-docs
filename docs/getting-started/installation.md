@@ -8,17 +8,7 @@ To install fresh copy of Brocket Framework simply run next command:
 composer create-project czernika/brocket <your-project-folder>
 ```
 
-Next fill in `.env` file at the root of your project with correct information, at least:
-
-| Variable | Value |
-| ------ | ------ |
-| DB_NAME | database name |
-| DB_USER | database user |
-| DB_PASSWORD | database password |
-| WP_HOME | Home URL of your site |
-| DOMAIN | Domain name. Only if you use Docker to launch site |
-
-Create database. If you have wp-cli, all you need to do is
+Fill `.env` file with correct [data](getting-started/env.md?id=env) like database credentials and site address. After create database. If you have wp-cli, all you need to do is
 
 ```sh
 wp db create
@@ -55,7 +45,13 @@ chown -R www-data:www-data /var/www/html/web/app/uploads
 chmod -R 755 /var/www/html/web/app/uploads
 ```
 
-To run site with https-protocol install [mkcert](https://github.com/FiloSottile/mkcert), proceed its installation and next run `mkcert domain.name` within `docker/nginx/certs` directory. This will create pair of keys - which you need to include within `docker/nginx/default.conf` file 
+To run site with https-protocol install [mkcert](https://github.com/FiloSottile/mkcert), proceed its installation and next run within `docker/nginx/certs` directory
+
+```sh
+mkcert domain.name
+```
+
+This will create pair of keys - which you need to include within `docker/nginx/default.conf` file 
 
 !> If you see `SSL_ERROR_RX_RECORD_TOO_LONG`, open website no at `localhost` but `127.0.0.1`
 

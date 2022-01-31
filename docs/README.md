@@ -76,4 +76,4 @@ and many others authors of Composer packages and WordPress plugins Brocket uses
 
 Brocket Framework runs under MIT [license](https://github.com/czernika/brocket/blob/master/LICENSE.md)
 
-![Brocket Framework](../_media/screenshot.png)
+![Brocket Framework](_media/screenshot.png)

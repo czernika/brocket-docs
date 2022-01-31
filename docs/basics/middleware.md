@@ -1,8 +1,8 @@
-# Middleware
+# Middleware :id=middleware
 
 See [WPEmerge middleware documentation](https://docs.wpemerge.com/#/framework/routing/middleware)
 
-## Create Middleware
+## Create Middleware :id=create
 
 To create controller class run in your terminal
 
