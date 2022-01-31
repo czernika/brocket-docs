@@ -13,3 +13,6 @@
     * [Providers](basics/providers.md)
     * [Customizer](basics/customizer.md)
     * [Helpers](basics/helpers.md)
+
+* Digging Deeper
+  * [Mails](advanced/mails.md)

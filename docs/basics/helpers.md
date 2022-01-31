@@ -28,13 +28,13 @@ Get configuration file key. Key must be in a dotted notation, where first key wo
 
 For example `config( 'app.some.key' )` will return `value` from `'some' => [ 'key' => 'value' ]` key within `config/app.php` file
 
-Return `mixed`
+Returns `mixed`
 
 ## app( ?string $key = null )
 
 Get app container key or app itself
 
-Return `mixed`
+Returns `mixed`
 
 ## output( string|array $view, array $ctx = [] )
 
@@ -44,4 +44,4 @@ Output helper for Controllers. Renders twig template file with context `$ctx`
 
 Get full asset path by its key within manifest file
 
-Return `string`
+Returns `string`
