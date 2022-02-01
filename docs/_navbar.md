@@ -1,3 +1,2 @@
-* Change language 
-    * [English](/)
-    * [Русский](/ru/)
+* [En](/)
+* [Рус](/ru/)

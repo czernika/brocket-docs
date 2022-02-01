@@ -15,5 +15,8 @@
     * [Кастомайзер](ru/basics/customizer.md)
     * [Вспомогательные функции](ru/basics/helpers.md)
 
-* Digging Deeper
+* Работа с фронтом сайта
+  * [Файлы представлений](ru/front/views.md)
+
+* Копаем глубже
   * [Отправка сообщений](ru/advanced/mails.md)
