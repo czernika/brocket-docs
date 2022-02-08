@@ -2,13 +2,13 @@
 
 ## Основы маршрутизации с WPEmerge :id=basics
 
-Чтобы узнать больше о маршрутизации, прочтите [документацию WPEmerge о маршрутах](https://docs.wpemerge.com/#/framework/routing/request-lifecycle)
+Чтобы узнать больше о маршрутизации, прочтите [документацию WPEmerge](https://docs.wpemerge.com/#/framework/routing/request-lifecycle)
 
 ## Условные теги :id=conditional
 
 Brocket использует маршрутизацию WPEMerge в основе, но с двумя дополнениями
 
-Во-первых, Вы можете использовать фасад `Brocooly\Support\Facades\Route` вместо метода `Brocooly::route()`
+Во-первых, Вы можете использовать фасад `Brocooly\Support\Facades\Route` вместо вызова метода `Brocooly::route()`
 
 ```php
 use Brocooly\Support\Facades\Route;
@@ -23,9 +23,11 @@ Brocooly::route()->get()->where( 'is_front_page' )->handle( /* коллбэк-ф
 
 ```php
 Route::is_front_page()->handle( /* коллбэк-функция */ );
+
+Route::is_page( 1 )->handle( /* коллбэк-функция сработает на странице с id=1 */ );
 ```
 
-Но не все условные теги могут использоваться, как имя метода (некоторые из них требуют указание параметров, некоторые попросту бесполезны с точки зрения маршрутизации) - так что список разрешенных тегов со ссылкой размещен ниже
+Но не все условные теги могут использоваться, как имя метода (некоторые попросту бесполезны с точки зрения маршрутизации) - так что список разрешенных тегов со ссылкой на страницу с описанием размещен ниже
 
 - [is_404()](https://developer.wordpress.org/reference/functions/is_404/)
 - [is_archive()](https://developer.wordpress.org/reference/functions/is_archive/)
@@ -38,6 +40,7 @@ Route::is_front_page()->handle( /* коллбэк-функция */ );
 - [is_home()](https://developer.wordpress.org/reference/functions/is_home/)
 - [is_month()](https://developer.wordpress.org/reference/functions/is_month/)
 - [is_page()](https://developer.wordpress.org/reference/functions/is_page/)
+- [is_page_template()](https://developer.wordpress.org/reference/functions/is_page_template/)
 - [is_paged()](https://developer.wordpress.org/reference/functions/is_paged/)
 - [is_post_type_archive()](https://developer.wordpress.org/reference/functions/is_post_type_archive/)
 - [is_privacy_policy()](https://developer.wordpress.org/reference/functions/is_privacy_policy/)
