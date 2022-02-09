@@ -63,6 +63,8 @@ Brocket использует пакет [extended post types](https://github.com
 
 Создание метабоксов и настроек темы никогда не было столь простым вместе с [CarbonFields](https://carbonfields.net/) и [Kirki Framework](https://kirki.org/). Brocket использует оба пакета в основе и еще больше упрощает работу с ними!
 
+?> Помните - Brocket использует WPEmerge, Timber, Bedrock и WordPress - потому за дополнениями можно смело обращаться к ним в документацию
+
 ## Благодарность :id=thanks
 
 Brocket Framework своим существованием обязан следующим авторам и их пакетам:

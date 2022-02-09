@@ -1,17 +1,15 @@
-# Middleware
+# Посредники :id=middleware
 
-See [WPEmerge middleware documentation](https://docs.wpemerge.com/#/framework/routing/middleware)
+Посредники позволяют Вам изменить объект запроса до или после того, как он достигнет функции обработчика маршрута
 
-## Create Middleware
+Существует только одно главное правило при создании посредника - он должен иметь метод `handle()`, принимающий минимум два параметра - `\WPEmerge\Requests\RequestInterface $request` и `\Closure $next`
 
-To create controller class run in your terminal
+Чтобы создать объект посредника, выполните в терминале следующую команду
 
 ```sh
-php brocooly new:middleware MiddlewareName
+php brocooly new:middleware IsAdmin
 ```
 
-This will create `MiddlewareName.php` file within `Theme/Http/Middleware` directory
+!> Не забудьте зарегистрировать посредник внутри файла конфигурации `wpemerge.php`
 
-!> Don't forget to register middleware within `config/wpemerge.php` file as it was mentioned in WPEmerge documentation
-
-Wright any logic within handle method
+?> Логика работы посредников внутри маршрутов, контроллеров, а также их регистрация внутри приложения хорошо расписана в [документации WPEmerge](https://docs.wpemerge.com/#/framework/routing/middleware) и не требует никаких дополнений со стороны Brocket

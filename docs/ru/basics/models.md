@@ -1,18 +1,18 @@
-# Models
+# Модели :id=models
 
-Brocket Model is a realization of Timber's `Post` and `Term` classes. Basically WordPress has few basic models, two of them are post type and taxonomy. These conventions are serves as core concept for models under hood of Brocket
+Brocket реализует свои модели с использованием классов `Timber\Post` и `Timber\Term`. Хотя нельзя полноценно назвать эти классы моделями, однако они используют схожие методики для работы с базой данных через объект `Timber\PostQuery`
 
-## Post Types
+## Пост тайпы :id=post-types
 
-To register custom post type (or create custom post type model speaking in Brocket-way) run the following command
+Чтобы зарегистрировать кастомный пост-тайп (или создать модель, говоря языком Brocket), выполните следующую команду
 
 ```sh
-php brocooly new:model:post_type PostType
+php brocooly new:model:post_type CustomPostType
 ```
 
-Within generated model it is crucial to have at least two options:
+Внутри сгенерированного класса нужно выполнить два условия:
 
-- First of all, it need to use `RequiresRegistrationTrait` to be able to registered via WordPress core.
+1. Вы должны использовать `Brocooly\Support\Traits\RequiresRegistrationTrait`, чтобы иметь возможность регистрации пост тайпа в ядре WordPress. Без него регистрация будет проигнорирована, так как существуют уже ранее зарегистрированные модели ('post', 'page') или же модели, зарегистрированные при помощи плагинов
 
 ```php
 use Brocooly\Models\PostType;
@@ -24,7 +24,9 @@ class CustomPostType extends PostType
 }
 ```
 
-- Second condition - you need to fill at least `args()` method which should return array of arguments for post type registration. Basically it is same list as for [register_post_type()](https://developer.wordpress.org/reference/functions/register_post_type/) but as Brocket uses Extended post types package, you may also check [register_extended_post_type()](https://github.com/johnbillion/extended-cpts/wiki/Registering-Post-Types) function arguments. Other params (for example, for [WPGraphQL](https://www.wpgraphql.com/)) should be registered here.
+2. Модель должна содержать метод `args()`, который должен возвращать массив с опциями для регистрации пост-тайпа. По сути, это те же самые параметры, что и для родной функции [register_post_type()](https://developer.wordpress.org/reference/functions/register_post_type/), однако Вы можете использовать аргументы функции [register_extended_post_type()](https://github.com/johnbillion/extended-cpts/wiki/Registering-Post-Types), так как Brocket использует именно ее. Другие параметры (например, для [WPGraphQL](https://www.wpgraphql.com/)) также должны быть зарегистрированы внутри этого метода
+
+> В случае, если модель уже существует, этот шаг можно опустить
 
 ```php
 use Brocooly\Models\PostType;
@@ -37,15 +39,15 @@ class CustomPostType extends PostType
     public function args()
     {
         return [
-            // arguments
+            // аргументы
         ];
     }
 }
 ```
 
-To help you more, there are two additional methods - `labels()` (which should return array of labels for your post types. It will be included as $args['labels'] within post types arguments if present) and `names()` - it has plural, singular form of post type label and slug (see [here](https://github.com/johnbillion/extended-cpts/wiki))
+При генерации класса Brocket также создает два вспомогательных метода - `labels()` (возвращает массив имен для пост тайпа. Он будет включен как `$args['labels']` внутри аргументов пост тайпа, если сам метод присутствует) и `names()` - для указания одиночной и множественной форм ярлыков пост тайпа и его слаг (подробнее [здесь](https://github.com/johnbillion/extended-cpts/wiki))
 
-- And finally you must have `POST_TYPE` constant. It is same as a first argument of `register_post_type()` function - basically it is slug (if not overwritten) so it should be unique among all post types
+3. Наконец, самое главное Вы должны определить константу `POST_TYPE`. Она должна соответствовать первому аргументу функции `register_post_type()` function - по сути, это слаг пост тайпа, так что он должен быть уникальным среди всех зарегистрированных пост тайпов
 
 ```php
 use Brocooly\Models\PostType;
@@ -60,21 +62,22 @@ class CustomPostType extends PostType
     public function args()
     {
         return [
-            // arguments
+            // аргументы
         ];
     }
-}
 ```
 
-## Taxonomy
+## Таксономии :id=taxonomies
 
-Basically same concept is correct for custom taxonomies with a few differences
+По сути, точной такой же концепт, как и для пост тайпов, однако с некоторыми различиями
+
+Во-первых, таксономия принадлежит пост тайпу и привязывается к нему, потому можно указать пост тайп при создании таксономии
 
 ```sh
-php brocooly new:model:taxonomy Taxonomy --post_type PostType
+php brocooly new:model:taxonomy CustomTaxonomy --post_type CustomPostType
 ```
 
-`--post_type` flag is optional - if it is not present Taxonomy will be linked to `Post` model (which is a `post`). This flag should point the namespace of model with `Theme\Models` prefix. So if your post type has `Theme\Models\Custom` namespace the option should be `--post_type Custom/PostType`. If no such class present console will show warning but Taxonomy class will be created. Post types will defined within `$postTypes` property.
+Опция `--post_type` **НЕ** является обязательной - если его нет, генерируемая таксономия будет привязана к модели `Post`. Значение опции должно совпадать с пространством имен модели, за вычетом префикса `Theme\Models`. Если Ваша модель расположена под именем `Theme\Models\Custom`, значение опции должно быть `--post_type Custom/PostType`. Если модели пост тайпа не существует, консоль укажет предупреждение об этом, однако таксономия все равно будет создана. Значение пост тайпа должно быть определено внутри переменной `$postTypes`
 
 ```php
 use Theme\Models\WP\Post;
@@ -92,25 +95,25 @@ class CustomTaxonomy extends Taxonomy
     public function args()
     {
         return [
-            // arguments
+            // аргументы
         ];
     }
 }
 ```
 
-Taxonomy is not same as PostType and registered via [register_extended_taxonomy()](https://github.com/johnbillion/extended-cpts/wiki/Registering-taxonomies) function.
+Аргументы для таксономий должны совпадать с аргументами для функции [register_extended_taxonomy()](https://github.com/johnbillion/extended-cpts/wiki/Registering-taxonomies)
 
-## Registration
+## Регистрация :id=registration
 
 To register custom post types and taxonomies you should pass class name into `config/models.php` file within `post_types` and `taxonomies` keys respectively
 
 !> Dont' forget flush permalinks immediately after - go to your Settings - Permalinks and hit Save changes button or type `wp rewrite flush` command
 
-## Relations
+## Отношения :id=relations
 
-You may specify relations for your models. Currently there is only one but it is kinda basic relation - post type belongs to specific taxonomy
+Вы можете указать взаимосвязь Ваших пост тайпов и таксономий внутри модели для вывода их на фронте сайта. В настоящий момент у Brocket имеется только одна, хотя и самая основная связь - пост тайп принадлежит таксономии
 
-Example below will show you relation between `Book` post type and `Genre` taxonomy
+Например, у Вас есть пост тайп `Book` с таксономией `Genre`. Тогда взаимосвязь между двумя этими моделями можно определить таким образом
 
 ```php
 class Book extends PostType
@@ -122,48 +125,87 @@ class Book extends PostType
 }
 ```
 
-Within your twig templates you may access terms simply as
+Внутри шаблонов twig Вы можете получить массив жанров просто выполнив (при условии, что переменная `book` определена в контексте)
 
 ```twig
 {{ book.genres }}
 ```
 
-This will return an array of genre terms for specific book.
+Альтернативой данному решению выступает [встроенный](https://timber.github.io/docs/reference/timber-post/#terms) в `Timber\Post` метод `terms()`, внутри которого можно указать таксономию
 
-## Metaboxes
+```php
+class Book extends PostType
+{
+    public function genres()
+    {
+        return $this->terms( Genre::TAXONOMY );
+    }
+}
+```
 
-To add metaboxes to custom post types and taxonomies (and not only - you may metaboxes for posts the same way) you need to use `HasPostMetaboxes` or `HasTermMetaboxes` traits within respective models.
+Однако данный метод будет создавать запрос к базе каждый раз, когда встречается в цикле - так что для архивных страниц это может показаться плохой идеей. В то время как метод `belongsToTaxonomy()` создает запрос один раз и фильтрует значения уже внутри себя. Минусом же такого подхода является то, что Вы получаете все термы таксономии вне зависимости от того, используются они или нет внутри конкретного объекта пост тайпа. Так что здесь нужно держать баланс и думать, что для Вас выгоднее с точки зрения оптимизации. Для малого количества термов и внутри цикла рекомендуется использовать отношение, на одиночных страницах и при большом количестве термов - метод `terms()`
 
-This wil provide some methods for you but you have to create one at least called `metaboxes()`. This one should void some action which will be hooked into Carbon Fields [carbon_fields_register_fields](https://docs.carbonfields.net/quickstart.html) hook - all Carbon fields options are available but there are few methods to help you with
+## Метабоксы :id=metaboxes
 
-!> Every post type and taxonomy which has metaboxes needs to be registered within `models.php` configuration file.
+Метабкосы представляют из себя дополнительные блоки опций для определенной модели, доступные локально (только для определенного объекта, в отличие от опций темы). Функционал метабоксов поставляется из-под коробки WordPress, однако Brocket использует решение CarbonFields для быстрого и удобного создания разнообразных метабоксов, включая сложные репитеры 
 
-> You may pass `-m` flag when creating your model to have quick access to its methods
+Чтобы создать метабоксы для пост тайпов и таксономий, вы должны использовать трейты `HasPostMetaboxes` или `HasTermMetaboxes` внутри соответствующих моделей
+
+Чтобы создать метабоксы, внутри Вашей модели должны присутствовать метод `metaboxes()`. Он должен будет выполнить любое действие по регистрации метабоксов, которое будет подключаться в хук Carbon Fields [carbon_fields_register_fields](https://docs.carbonfields.net/quickstart.html). Любые методы Carbon Fields будут доступны для регистрации метабоксов
+
+!> Любая модель должна быть зарегистрирована внутри файла конфигурации `models.php` - даже зарегистрированные через ядро WordPress или плагины (например, `Post`)
+
+> При создании класса модели через консоль Вы можете указать флаг `-m`, чтобы создать методы для регистрации метабоксов внутри модели
+
+Brocket предоставляет несколько вспомогательных методов для регистрации контейнера для метабоксов и самих полей
 
 ### setContainer( string $id, string $title )
 
-This method helps you to quickly register container without defining where clause and will return `Carbon_Fields\Container` object - so you may continue to use Carbon Fields conditions and methods further. Just pass an unique container id and title (for end users) and start adding metaboxes to it
+Этот метод позволяет быстро зарегистрировать контейнер для текущей модели и будет возвращать объект `Carbon_Fields\Container` так что можно будет продолжать регистрацию полей через методы CarbonFields. Все, что Вам нужно сделать, это лишь предоставить уникальный id контейнера и его заголовок
+
+```php
+public function metaboxes()
+{
+    return $this->setContainer( 'brocket_container_id', __( 'Brocket Container', 'brocooly' ) )
+        ->add_field( //... );
+}
+```
 
 ### setContainerWithFields( string $id, string $title, array $fields )
 
-Same as above but with a third argument - an array of metaboxes
-
-### Meta Facade
-
-To help you register metaboxes quicker Brocket provides `Brocooly\Support\Facades\Meta` Facade which has almost every `Carbon_Fields\Field` [types](https://docs.carbonfields.net/quickstart.html) (except for sidebar)
-
-So these lines do the same
+Метод делает то же самое, что и `setContainer()`, но третьим параметром принимает массив метабоксов
 
 ```php
-Field::make( 'text', 'crb_text', 'Text Field' );
-
-Meta::text( 'crb_text', 'Text Field' );
+public function metaboxes()
+{
+    return $this->setContainerWithFields(
+        'brocket_container_id',
+        __( 'Brocket Container', 'brocooly' ),
+        [
+            // поля
+        ],
+    );
+}
 ```
 
-## User
+### Фасад Meta
 
-**In development**
+Чтобы ускорить регистрацию метабоксов, Brocket предоставляет фасад `Brocooly\Support\Facades\Meta`, который поддерживает практически все [поля](https://docs.carbonfields.net/quickstart.html) `Carbon_Fields\Field`, за исключением сайдбаров
 
-## Comment
+Методы фасада принимают два параметра - айди и заголовок метабокса, в то время как именем метода является тип метабокса - самое первое значение метода `Field::make()`
 
-**In development**
+Таким образом, следующие две строки кода выполняют одно и то же действие
+
+```php
+Field::make( 'text', 'crb_text', __( 'Text Field', 'brocooly' ) );
+
+Meta::text( 'crb_text', __( 'Text Field', 'brocooly' ) );
+```
+
+## User :id=user
+
+**В разработке**
+
+## Comment :id=comment
+
+**В разработке**
