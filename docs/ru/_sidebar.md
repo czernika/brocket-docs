@@ -20,4 +20,5 @@
   * [Стили и скрипты](ru/front/assets.md)
 
 * Копаем глубже
+  * [Запуск сайта с Docker](ru/advanced/docker.md)
   * [Отправка сообщений](ru/advanced/mails.md)
