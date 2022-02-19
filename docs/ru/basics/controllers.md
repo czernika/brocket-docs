@@ -6,33 +6,33 @@
 
 ?> Чтобы узнать больше о контроллерах, прочтите [документацию WPEmerge](https://docs.wpemerge.com/#/framework/routing/controllers)
 
-Чтобы создать контроллер, выполните в терминале следующую команду
+Для создания контроллера выполните в терминале следующую команду
 
 ```sh
 php brocooly new:controller PostController
 ```
 
-Указание контроллера и его метода в обработчике маршрута приходится на метод `handle()`, разделенный символом `@`. Так, например, запись
+Указание контроллера и его метода в обработчике маршрута приходится на метод `handle()`, разделенный символами `@` или `::`. Так, например, запись
 
 ```php
-Route::is_404()->handle( 'NotFoundController@index' );
+Route::is_front_page()->handle( 'FrontPageController@index' );
 ```
 
 означает, что запрос будет обработан методом `index()` контроллера `Theme\Http\Controllers\NotFoundController`
 
 ```php
-class NotFoundController
+class FrontPageController
 {
     public function index()
     {
-        return output( 'path.to.404.view' )->withStatus( 404 );
+        return output( 'path.to.front' );
     }
 }
 ```
 
-> Если пространство имен контроллера не совпадает с `Theme\Http\Controllers`, Вы можете [указать иное](https://docs.wpemerge.com/#/framework/routing/defining-routes?id=namespace) при помощи метода `setNamespace( $namespace )`
+> Если пространство имен контроллера не совпадает с `Theme\Http\Controllers`, Вы можете [указать иное](https://docs.wpemerge.com/#/framework/routing/defining-routes?id=namespace) при помощи метода `setNamespace( $namespace )` или же изменить его в файле конфигурации `wpemerge.php`
 
-!> На данный момент Brocket не работает с классами одного действия (метод `__invoke`) и не поддерживает иной синтаксис обработки методов контроллера, в отличие от Brocooly
+!> На данный момент Brocket не работает с классами одного действия (метод `__invoke`) и не поддерживает иной синтаксис обработки методов контроллера (в отличие от Brocooly)
 
 Чтобы быстро создать контроллер с методом `__construct()`, выполните команду с флагом `-c`. Флаг `-r` позволит создать "ресурсный" контроллер, содержащий методы `index()` и `single()` для обработки архивных запросов и одиночной страницы. Флаги можно совмещать
 
@@ -68,7 +68,7 @@ class MyController implements HasControllerMiddlewareInterface {
 
 ## Внедрение зависимостей :id=dependency-injection
 
-Под капотом Brocket фреймворк использует [контейнер Pimple](https://github.com/silexphp/Pimple), который поставляется вместе с WPEmmerge. Он не такой мощный, как используемый в Brocooly [PHP DI контейнер](https://php-di.org/), однако более "управляемый". Это значит, что все зависимости Вы должны будете указать сами, никакого автосвязывания и уайлд-кард для группы классов и интерфейсов
+Под капотом Brocket использует [контейнер Pimple](https://github.com/silexphp/Pimple), который поставляется вместе с WPEmerge. Он не такой мощный, как используемый в Brocooly [PHP DI контейнер](https://php-di.org/), однако более "управляемый". Это значит, что все зависимости Вы должны будете указать сами, никакого автосвязывания и уайлд-кард для группы классов и интерфейсов
 
 Вы можете переписать вызов контроллера так, как это указано [здесь](https://docs.wpemerge.com/#/framework/routing/controllers?id=instantiation), то есть, если у Вас есть `CustomController`
 
