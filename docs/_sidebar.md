@@ -1,19 +1,14 @@
-* [About](/)
+* [О проекте](/)
 
-* Getting Started
-    * [Requirements](getting-started/requirements.md)
-    * [Installation](getting-started/installation.md)
-    * [Environment](getting-started/env.md)
+* Начало работы
+    * [Минимальные требования](getting-started/requirements.md)
+    * [Установка](getting-started/installation.md)
 
-* The Basics
-    * [Routing](basics/routing.md)
-    * [Middleware](basics/middleware.md)
-    * [Controllers](basics/controllers.md)
-    * [Models](basics/models.md)
-    * [Query](basics/query.md)
-    * [Providers](basics/providers.md)
-    * [Customizer](basics/customizer.md)
-    * [Helpers](basics/helpers.md)
+* Основы работы
+    * [Маршрутизация](basics/routing.md)
+    * [Посредники](basics/middleware.md)
+    * [Контроллеры](basics/controllers.md)
 
-* Digging Deeper
-  * [Mails](advanced/mails.md)
+* Копаем глубже
+    * [Сервисный контейнер]()
+    * [Провайдеры]()   

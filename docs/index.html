@@ -8,34 +8,27 @@
   <meta property="og:image" content="/_media/screenshot.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-  <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">  -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
 
   <style>
     :root {
-      --link-color                        : var(--theme-color);
+      --link-color: var(--theme-color);
     }
   </style>
 
 </head>
 <body>
-  <div id="app">Please wait...</div>
+  <div id="app">Загрузка...</div>
   <script>
     window.$docsify = {
-      name: 'Brocket Framework',
+      name: 'Brocooly 2.0 Framework',
       repo: 'czernika/brocket',
       search: 'auto',
       search: {
         maxAge: 86400000, // Expiration time, the default one day
         paths: 'auto',
-        placeholder: {
-          '/ru/': 'Поиск',
-          '/': 'Type to search'
-        },
-        noData: {
-          '/ru/': 'Результатов нет!',
-          '/': 'No results!'
-        },
+        placeholder: 'Поиск',
+        noData: 'Результатов нет!',
         depth: 6,
         hideOtherSidebarContent: false,
       },
@@ -44,24 +37,10 @@
       routerMode: 'hash',
       subMaxLevel: 2,
       auto2top: true,
-      logo: '_media/logo-64.svg',
-      nameLink: {
-        '/ru/': '#/ru/',
-        '/': '#/',
-      },
       copyCode: {
-        buttonText: {
-          '/ru/'   : 'Скопировать в буфер обмена',
-          '/'      : 'Copy to clipboard'
-        },
-        errorText: {
-          '/ru/'   : 'Ошибка',
-          '/'      : 'Error'
-        },
-        successText: {
-          '/ru/'   : 'Скопировано',
-          '/'      : 'Copied'
-        },
+        buttonText: 'Скопировать в буфер обмена',
+        errorText: 'Ошибка',
+        successText: 'Скопировано',
       }
     }
   </script>
