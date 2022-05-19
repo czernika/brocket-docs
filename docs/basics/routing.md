@@ -235,6 +235,8 @@ class SomeController extends AbstractController
 
 !> Обратите внимание - возвращаемый тип `$id` - `string` (не `integer`)
 
+> В отличие от Laravel, где параметры функции передаются через сервисный контейнер, здесь обратная ситуация - контейнер передает параметры методу
+
 ## Файлы представлений :id=view
 
 Иногда для простых файлов представлений, которым не требуется обработка и передача данных, проще указать маршрут, который возвращает указанный файл
@@ -259,7 +261,7 @@ Route::view('/hello', 'index.twig', ['foo' => 'bar']);
 
 !> Помните - в файлах маршрутов глобальная переменная `$wp_query` еще не определена
 
-### Группы маршрутов :id=group
+## Группы маршрутов :id=group
 
 Можно создать группу маршрутов, чтобы установить им одинаковые свойства
 Первым параметром может быть "общий" префикс пути или массив любых аргументов маршрута
@@ -274,6 +276,44 @@ Route::group(['namespace' => 'Custom\\', 'prefix' => '/admin'], function () {
     Route::get('/', /** замыкание */); // '/admin'
     Route::get('/posts', /** замыкание */); // '/admin/posts'
 });
+```
+
+Список параметров, которые могут быть установлены:
+
+1. 'prefix' - для указания общего префикса группы
+2. 'namespace' - пространство имен контроллера
+3. 'name' - префикс имени всех маршрутов
+4. 'midlleware' - посредник или группа посредников, применяемая к маршрутам
+
+```php
+Route::group([
+	'prefix' => '/posts',
+	'namespace' => 'Theme\\Custom\\',
+	'name' => 'posts.',
+    'middleware' => 'custom_middleware'
+], function () {
+	Route::get('/', 'Controller@index')
+            ->name('index'); // posts.index
+	Route::get('/:id', 'Controller@example')
+            ->name('show'); // posts.show
+});
+```
+
+!> Значения `prefix` и `name` могут быть установлены только для УРЛ-маршрутов, они будут игнорироваться для WordPress маршрутов 
+
+## Редиректы :id=redirect
+
+Вы можете использовать метод для перенаправления с одного УРЛ на другой. Третьим аргументом идет статус, по умолчанию равен 302 (HTTP_MOVED)
+
+```php
+Route::redirect('/from', '/to');
+Route::redirect('/from', '/to', 301);
+```
+
+Для постоянного перенаправления можно использовать метод `permanentRedirect` со статусом 301
+
+```php
+Route::permanentRedirect('/from', '/to');
 ```
 
 ## Условные теги WordPress :id=conditional-routing
@@ -327,7 +367,25 @@ Route::get('/hello', 'Controller@index')->name('hello');
 Методы можно ставить в цепочку
 
 ```php
-Route::get('/hello', 'Controller@index')
+Route::get('/hello-world', 'Controller@index')
     ->namespace('Theme\\Custom\\')
     ->name('hello');
+```
+
+Чтобы получить УРЛ именованного маршрута, можно воспользоваться функцией `route()` - он принимает имя маршрута первым параметром
+
+```php
+dd(route('hello')); // '/hello-world'
+```
+
+Вторым параметром можно указать параметры УРЛ (строкой, если один, или массивом, если их несколько), например
+
+```php
+Route::get('/posts/:id', 'Controller@index')
+    ->name('posts.show'); // '/posts/12'
+
+Route::get('/posts/:slug/comments/:id', 'Controller@index')
+    ->name('comments');
+
+dd(route('comments', ['hello-world', 15])); // '/posts/hello-world/comments/15'
 ```
