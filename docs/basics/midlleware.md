@@ -27,6 +27,19 @@ public function handle(RequestInterface $request, Closure $next)
 }
 ```
 
+Вернуть ответ поможет метод `showErrorPage()`, который принимает обязательным параметром статус ответа и вторым (опциональным) - сообщение. Если сообщение не указано, оно будет получено из стандартного ответа согласно статусу ('Bad Request' для 400, 'Not Found' для 404 и так далее)
+
+```php
+public function handle(RequestInterface $request, Closure $next)
+{
+    if (true) {
+        return $this->showErrorPage(302, 'Редиректнуло');
+    }
+
+    return $next($request);
+}
+```
+
 Посредник можно использовать в методах, указав имя класса или же зарегистрировать его "ключ" в классе `Theme\Http\Kernel`
 
 ```php
