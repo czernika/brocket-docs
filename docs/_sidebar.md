@@ -6,9 +6,8 @@
 
 * Основы работы
     * [Маршрутизация](basics/routing.md)
-    * [Посредники](basics/middleware.md)
     * [Контроллеры](basics/controllers.md)
+    * [Посредники](basics/middleware.md)
 
 * Копаем глубже
-    * [Сервисный контейнер]()
-    * [Провайдеры]()   
+    * [Консольные команды](advanced/console.md)

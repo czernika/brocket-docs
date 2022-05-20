@@ -132,9 +132,20 @@ Route::get('/posts/:something', fn() => 'Hello World')
 ```php
 Route::get('/posts/:id', fn() => 'Hello World')
         ->where([':id' => '(.*)']);
+
+Route::get('/posts/:id', fn() => 'Hello World')
+        ->where([':id' => 5]);
 ```
 
-Несмотря на то, что ключ `:id` используется для валидации только цифр, мы указали, что он соответствует любому вхождению и таким образом валидным будет любое вхождение 
+Несмотря на то, что ключ `:id` используется для валидации только цифр, мы указали, что он соответствует любому вхождению и таким образом валидным будет только путь с id = 5
+
+Если параметр может быть, а может и не быть, выражение следует обрамить вопрос с двух сторон, и указать дефолтное значение параметра
+
+```php
+Route::get('/posts/?:id?', fn($request, $id = 0) => $id);
+```
+
+На странице `/posts` мы увидим 0, а на остальных - переданный параметр `:id`
 
 ## Обработчики :id=handlers
 
@@ -199,7 +210,7 @@ class SomeController extends AbstractController
 }
 ```
 
-Абсолютна каждый обработчик принимает в качестве первого параметра объект `RequestInterface`, который можно будет модифицировать в контроллере или получить от него необходимые данные
+Абсолютно каждый обработчик принимает в качестве первого параметра объект `RequestInterface`, который можно будет модифицировать в контроллере или получить от него необходимые данные
 
 ```php
 Route::get('/hello', [SomeController::class, 'index']);
@@ -290,12 +301,12 @@ Route::post('/hello', fn() => redirect()->back());
 Route::get('/hello', fn() => output('Hello World'));
 ```
 
-### blank()
+### response()
 
 Создает пустой объект ответа, который можно модифицировать самостоятельно
 
 ```php
-Route::get('/hello', fn() => blank()->withStatus(500));
+Route::get('/hello', fn() => response()->withStatus(500));
 ```
 
 ## Файлы представлений :id=view
@@ -438,10 +449,11 @@ dd(route('hello')); // '/hello-world'
 
 ```php
 Route::get('/posts/:id', 'Controller@index')
-    ->name('posts.show'); // '/posts/12'
+    ->name('posts.show');
 
 Route::get('/posts/:slug/comments/:id', 'Controller@index')
     ->name('comments');
 
+dd(route('posts.show', 34)); // '/posts/34'
 dd(route('comments', ['hello-world', 15])); // '/posts/hello-world/comments/15'
 ```
