@@ -17,3 +17,5 @@ php brocooly list
 | -//- | `--invokable, -i` - необязательный, нет значения | Создавать контроллер одного действия или нет |
 | `new:middleware <name>` | `<name>` - имя посредника | Создание класса посредника относительно `Theme\\Http\\Middleware\\` | 
 | `new:customizer:section <name>` | `<name>` - айди секции | Создание класса секции кастомайзера `Theme\\Customizer\\Sections\\` | 
+| -//- | `--panel` - айди панели | Привязка созданной секции к панели |
+| `new:customizer:panel <name>` | `<name>` - айди панели | Создание класса панели кастомайзера `Theme\\Customizer\\Panels\\` |

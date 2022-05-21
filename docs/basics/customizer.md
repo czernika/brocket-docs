@@ -85,7 +85,33 @@ protected function fields() : array
 
 ## Панели
 
-@TODO Создание панели, связывание панели и секций
+Панели создаются для объединения секций - они **НЕ** содержат никаких настроек. Создаются панели при помощи команды
+
+```sh
+php brocooly new:customizer:panel <PanelName>
+```
+
+Созданный файл появится под именем `Theme\\Customizer\\Panels\\PanelName`
+
+Чтобы приписать секцию к определенной панели, нужно в массиве ее аргументов указать айди панели
+
+```php
+protected function args() : string|array
+{
+    return [
+        'title' => 'Section Title',
+        'description' => 'Description',
+        'priority' => 10,
+        'panel' => PanelName::PANEL_ID,
+    ];
+}
+```
+
+При создании секции можно привязать ее к определенной панели
+
+```sh
+php brocooly new:customizer:section <SectionName> --panel=<PanelName>
+```
 
 ## Отдельные настройки
 
