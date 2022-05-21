@@ -15,4 +15,5 @@ php brocooly list
 | `new:controller <name>` | `<name>` - имя контроллера | Создание класса контроллера относительно `Theme\\Http\\Controllers\\` |
 | -//- | `--constructor, -c` - необязательный, нет значения | Создавать метод конструктора или нет |
 | -//- | `--invokable, -i` - необязательный, нет значения | Создавать контроллер одного действия или нет |
-| `new:middleware <name>` | `<name>` - имя посредника | Создание класса посредника относительно `Theme\\Http\\Middleware\\` 
+| `new:middleware <name>` | `<name>` - имя посредника | Создание класса посредника относительно `Theme\\Http\\Middleware\\` | 
+| `new:customizer:section <name>` | `<name>` - айди секции | Создание класса секции кастомайзера `Theme\\Customizer\\Sections\\` | 
