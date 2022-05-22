@@ -143,5 +143,5 @@ protected function fields() : array
 Вторым параметром она принимает дефолтное значение, если настройки не существует
 
 ```twig
-{{ theme.theme_mod('example_setting', 'Callback') }} // 'Hello'
+{{ theme.theme_mod('example_setting', 'Callback') }} // 'Callback', если настройки не существует
 ```

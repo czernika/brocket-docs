@@ -8,8 +8,11 @@
     * [Маршрутизация](basics/routing.md)
     * [Контроллеры](basics/controllers.md)
     * [Посредники](basics/middleware.md)
-    * [Работа с фронтом](basics/front-end.md)
+    * [Модели](basics/models.md)
+    * [Строитель запросов](basics/query.md)
     * [Кастомайзер и опции сайта](basics/customizer.md)
+    * [Работа с фронтом](basics/front-end.md)
 
 * Копаем глубже
     * [Консольные команды](advanced/console.md)
+    * [Пагинация](advanced/pagination.md)
