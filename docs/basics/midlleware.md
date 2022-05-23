@@ -40,6 +40,19 @@ public function handle(RequestInterface $request, Closure $next)
 }
 ```
 
+Вместо ответа также можно бросить `Exception`, который превратится в ответ
+
+```php
+public function handle(RequestInterface $request, Closure $next)
+{
+    abort(403);
+    abort(403, 'Нельзя'); // можно отдельно указать сообщение
+    abort_if(true, 403, 'Нельзя'); // или поставить условие
+
+    return $next($request);
+}
+```
+
 Посредник можно использовать в методах, указав имя класса или же зарегистрировать его "ключ" в классе `Theme\Http\Kernel`
 
 ```php
