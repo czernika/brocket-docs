@@ -221,7 +221,7 @@ use Brocooly\Http\Requests\RequestInterface;
 
 class SomeController extends AbstractController
 {
-	public function index(RequestInterface $request)
+	public function index(SomeRequest $request)
 	{
 		return view('index.twig');
 	}
@@ -237,12 +237,11 @@ Route::get('/posts/:id/hello/:slug', [SomeController::class, 'index']);
 Для маршрута `/posts/17/hello/world` мы получим
 
 ```php
-use Brocooly\Http\Requests\RequestInterface;
-
 class SomeController extends AbstractController
 {
-	public function index(RequestInterface $request, $id, $slug)
+	public function index(SomeRequest $request, $id, $slug)
 	{
+		dump($request); // объект
         dump($id); // '17'
         dump($slug); // 'world'
 		return view('index.twig');
@@ -250,9 +249,39 @@ class SomeController extends AbstractController
 }
 ```
 
-!> Обратите внимание - возвращаемый тип `$id` - `string` (не `integer`)
+Вы также можете передать имена моделей
 
-> В отличие от Laravel, где параметры функции передаются через сервисный контейнер, здесь обратная ситуация - контейнер передает параметры методу
+```php
+Route::get('/posts/:id/', [SomeController::class, 'index']);
+```
+
+Для маршрута `/posts/17/hello/world` мы получим
+
+```php
+class SomeController extends AbstractController
+{
+	public function index(SomeRequest $request, Post $post)
+	{
+		dump($request); // объект
+        dump($post); // Объект поста с id = 17
+		return view('index.twig');
+	}
+}
+```
+
+Если модель не существует, то страница вернет ответ 404
+
+## Канонический редирект :id=canonical
+
+Иногда WordPress в попытке предугадать Ваш маршрут может искажать его и перенаправлять на главную страницу. В таком случае можно воспользоваться хуком `redirect_canonical`
+
+```php
+add_filter('redirect_canonical', fn($redirect_url, $requested_url) => $requested_url, 10, 2);
+```
+
+К сожалению, в таком случае ломается глобальный параметр `WP_Query`, а потому ядро будет считать, что текущая страница - это `front_page`
+
+!> Будьте аккуратны с большими вложенными пермалинками или же пишите кастомные эндпоинты. WordPress активно сопротивляется попытке ларавелизовать его
 
 ## Типы ответа :id=response
 
