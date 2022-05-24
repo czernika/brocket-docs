@@ -14,5 +14,6 @@
     * [Работа с фронтом](basics/front-end.md)
 
 * Копаем глубже
-    * [Консольные команды](advanced/console.md)
+    * [Валидация запроса](advanced/validation.md)
     * [Пагинация](advanced/pagination.md)
+    * [Консольные команды](advanced/console.md)

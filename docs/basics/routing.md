@@ -10,9 +10,9 @@ Brocooly собирает все маршруты в едином файле и 
 do_action('brocooly.index.response', app(GLOBAL_REQUEST_KEY));
 ```
 
-Именно этот хук отвечает за вывод ответа на экран. Принимает он в себя один обязательный аргумент - это объект `Brocooly\Requests\RequestInterface` и именно на его основе возвращается ответ сервера, будет ли маршрут определен или нет
+Именно этот хук отвечает за вывод ответа на экран. Принимает он в себя один обязательный аргумент - это объект `Brocooly\Http\Requests\RequestInterface` и именно на его основе возвращается ответ сервера, будет ли маршрут определен или нет
 
-!> Ни в коем случае не удаляйте этот файл - это требование WordPress для нахождения темы. Он модет быть пустым, однако в таком случае WordPress будет выполнять стандартную логику маршрутизации
+!> Ни в коем случае не удаляйте этот файл - это требование WordPress для нахождения темы. Он может быть пустым, однако в таком случае WordPress будет выполнять стандартную логику маршрутизации
 
 Определения маршрутов находятся в корне директории `routes`, однако Вы можете изменить (или добавить) файлы маршрутов внутри метода `routes` провайдера `RouterServiceProvider`. Ключ (например, `web`) - это имя посредника, который вызывается при вызове каждого маршрута
 
@@ -25,7 +25,7 @@ class RouteServiceProvider extends AbstractServiceProvider
 	{
 		$this->routes([
 			'web' => [
-				'path' => routes_path() . '/web.php', // путь к файлу маршрутов
+				'path' => routes_path() . DIRECTORY_SEPARATOR . 'web.php', // путь к файлу маршрутов
 			],
 		]);
 	}
@@ -139,7 +139,7 @@ Route::get('/posts/:id', fn() => 'Hello World')
 
 Несмотря на то, что ключ `:id` используется для валидации только цифр, мы указали, что он соответствует любому вхождению и таким образом валидным будет только путь с id = 5
 
-Если параметр может быть, а может и не быть, выражение следует обрамить вопрос с двух сторон, и указать дефолтное значение параметра
+Если параметр может быть, а может и не быть, выражение следует обрамить знаком вопроса с двух сторон, и указать дефолтное значение параметра
 
 ```php
 Route::get('/posts/?:id?', fn($request, $id = 0) => $id);
@@ -169,6 +169,7 @@ Route::get('/hello', fn() => view('index.twig'));
 Можно создать контроллер, который будет наследоваться от `Brocooly\Http\Controllers\AbstractController` и вызывать его метод. Сделать это можно тремя способами
 
 #### Строковый вызов :id=controller-string
+
 ```php
 Route::get('/hello', 'SomeController@index');
 
@@ -176,7 +177,7 @@ Route::get('/hello', 'SomeController@index');
 Route::get('/hello', 'SomeController::index');
 ```
 
-В данном случае будет вызван метод `index` контроллера `SomeController`. Пространство имен для данного контроллера можно указать в методе `routes` провайдера `RouteServiceProvider` (по-умолчанию это `Theme\\Http\\Controllers\\`)
+В данном случае будет вызван метод `index` контроллера `SomeController`. Пространство имен для данного контроллера можно указать в методе `routes` провайдера `RouteServiceProvider` (по-умолчанию это `Theme\\Http\\Controllers\\`) или с помощью метода `namespace()`
 
 #### Вызов callable :id=controller-callable
 
@@ -190,7 +191,7 @@ Route::get('/hello', [SomeController::class, 'index']);
 
 Делает то же самое, что и выше, однако здесь больше контроля над пространством имен и этот метод гораздо ближе к нативному PHP
 
-#### Контроллер одного вызова :id=controller-invokable
+#### Контроллер одного метода :id=controller-invokable
 
 Если контроллер использует всего один метод, вместо его создания можно указать метод `__invoke`, и регистрация маршрута будет выглядеть следующим образом
 
@@ -210,15 +211,13 @@ class SomeController extends AbstractController
 }
 ```
 
-Абсолютно каждый обработчик принимает в качестве первого параметра объект `RequestInterface`, который можно будет модифицировать в контроллере или получить от него необходимые данные
+Абсолютно каждый обработчик может принимать любые параметры, однако их значение может разниться в зависимости от маршрута. В любой маршрут можно передать объект `ResponseInterface` 
 
 ```php
 Route::get('/hello', [SomeController::class, 'index']);
 ```
 
 ```php
-use Brocooly\Http\Requests\RequestInterface;
-
 class SomeController extends AbstractController
 {
 	public function index(SomeRequest $request)
@@ -241,8 +240,8 @@ class SomeController extends AbstractController
 {
 	public function index(SomeRequest $request, $id, $slug)
 	{
-		dump($request); // объект
-        dump($id); // '17'
+		dump($request); // объект запроса SomeRequest с параметрами
+        dump($id); // 17
         dump($slug); // 'world'
 		return view('index.twig');
 	}
@@ -255,7 +254,7 @@ class SomeController extends AbstractController
 Route::get('/posts/:id/', [SomeController::class, 'index']);
 ```
 
-Для маршрута `/posts/17/hello/world` мы получим
+Для того же маршрута `/posts/17/hello/world` мы получим
 
 ```php
 class SomeController extends AbstractController
@@ -278,7 +277,7 @@ Route::is_single(function (Post $post) {
 	dump($post); // получит текущий объект поста
 });
 
-Route::is_single(function (Page $page) {
+Route::is_page(function (Page $page) {
 	dump($page); // получит текущий объект страницы
 });
 ```
@@ -457,15 +456,15 @@ Brocooly не меняет входящий запрос WordPress - так чт
 
 ```php
 /**
-	 * Array of WordPress conditionals
-	 *
-	 * Add new keys like `is_shop`
-	 *
-	 * @var string[]
-	 */
-	protected array $extraConditionals = [
-		'is_shop',
-	];
+ * Array of WordPress conditionals
+ *
+ * Add new keys like `is_shop`
+ *
+ * @var string[]
+ */
+protected array $extraConditionals = [
+	'is_shop',
+];
 ```
 
 Теперь можно создавать маршрут
@@ -484,7 +483,7 @@ Route::is_shop(/** параметры */);
 Route::ajax('action_name', /** замыкание */, 'POST', true);
 ```
 
-где `POST` - метод маршрута, а `true` устанавливает возможность запуска запроса неавторизованным пользователям
+где `POST` - метод маршрута (опциональный, по-умолчанию 'POST'), а `true` устанавливает возможность запуска запроса неавторизованным пользователям (по-умолчанию `false`)
 
 В директории `routes` можно заметить два файла - `web.php` и `ajax.php`. Метод `ajax` может быть помещен в любой из них. Так в чем же смысл?
 
@@ -496,7 +495,7 @@ Route::ajax('action_name', /** замыкание */, 'POST', true);
 Route::post('action_name', /** замыкание */)->isPublic();
 ```
 
-!> AJAX-маршруты НЕ поддерживают создание произвольных имен - оно формируется автоматически из префикса `ajax_` и имени экшена
+!> AJAX-маршруты НЕ поддерживают создание произвольных имен - оно формируется автоматически из префикса `ajax_` и имени экшена, то есть, для примера выше это будет "ajax_action_name"
 
 ## Параметры :id=parameters
 
