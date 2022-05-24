@@ -271,6 +271,30 @@ class SomeController extends AbstractController
 
 Если модель не существует, то страница вернет ответ 404
 
+Каждый "singular" объект (возвращающий `true` на условие `is_singular()`) WordPress также может быть получен через аргументы замыкания, например
+
+```php
+Route::is_single(function (Post $post) {
+	dump($post); // получит текущий объект поста
+});
+
+Route::is_single(function (Page $page) {
+	dump($page); // получит текущий объект страницы
+});
+```
+
+На каждой архивной странице (включая `is_home()`) будет возвращать текущий объект `WP_Query`
+
+```php
+Route::is_archive(function ($queried) {
+	dump($queried); // получит текущий объект архива WP_Term
+});
+
+Route::is_home(function ($queried) {
+	dump($queried); // получит текущий объект страницы записей (которая указана в Настройки - Чтение) WP_Post
+});
+```
+
 ## Канонический редирект :id=canonical
 
 Иногда WordPress в попытке предугадать Ваш маршрут может искажать его и перенаправлять на главную страницу. В таком случае можно воспользоваться хуком `redirect_canonical`
