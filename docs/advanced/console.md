@@ -19,3 +19,4 @@ php brocooly list
 | `new:customizer:section <name>` | `<name>` - айди секции | Создание класса секции кастомайзера `Theme\\Customizer\\Sections\\` | 
 | -//- | `--panel` - айди панели | Привязка созданной секции к панели |
 | `new:customizer:panel <name>` | `<name>` - айди панели | Создание класса панели кастомайзера `Theme\\Customizer\\Panels\\` |
+| `new:request <name>` | `<name>` - имя запроса | Создание класса запроса `Theme\\Http\\Requests\\` | 
