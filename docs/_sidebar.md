@@ -16,4 +16,5 @@
 * Копаем глубже
     * [Валидация запроса](advanced/validation.md)
     * [Пагинация](advanced/pagination.md)
+    * [Сервисный контейнер](advanced/container.md)
     * [Консольные команды](advanced/console.md)
